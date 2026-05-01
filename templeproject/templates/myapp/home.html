@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Library Management System | Complete Suite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: #0f172a;
+            line-height: 1.5;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            padding: 1rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo h2 {
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #f0f9ff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            transition: 0.2s;
+            border-radius: 30px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Cards Generic */
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: 0.2s;
+            border-left: 6px solid #2a5298;
+        }
+        .stat-card h3 { font-size: 2rem; color: #1e3c72; margin: 0.5rem 0; }
+        .stat-card p { color: #334155; font-weight: 500; }
+
+        /* Form styling */
+        .form-card {
+            background: white;
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 28px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.4rem;
+            color: #1e293b;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 1rem;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42,82,152,0.2);
+        }
+        button, .btn {
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        button:hover {
+            background: #1e3c72;
+            transform: scale(0.98);
+        }
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #eef2ff;
+            color: #1e3c72;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin: 0 4px;
+        }
+        .edit-btn { color: #2c7da0; }
+        .delete-btn { color: #e63946; }
+        .search-section {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .category-badge {
+            background: #2a5298;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #0f172a;
+            color: #cbd5e1;
+            margin-top: 3rem;
+        }
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 1rem; }
+            .nav-links { justify-content: center; }
+            th, td { font-size: 0.8rem; padding: 0.6rem; }
+        }
+        .page {
+            display: none;
+        }
+        .active-page {
+            display: block;
+        }
+        .message {
+            background: #dcfce7;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        .danger-msg {
+            background: #ffe4e2;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo"><h2>📚 LibSys</h2></div>
+    <ul class="nav-links">
+        <li><a href="#" data-page="home">Home</a></li>
+        <li><a href="#" data-page="about">About</a></li>
+        <li><a href="#" data-page="books">Books</a></li>
+        <li><a href="#" data-page="members">Members</a></li>
+        <li><a href="#" data-page="history">History</a></li>
+        <li><a href="#" data-page="contact">Contact</a></li>
+        <li><a href="#" data-page="login">Login</a></li>
+    </ul>
+</nav>
+
+<div class="container" id="app-root">
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page active-page">
+        <h1>📖 Library Management System</h1>
+        <p style="font-size:1.2rem; margin:0.5rem 0;">Welcome to Library Management System</p>
+        <p>Your gateway to thousands of books, seamless borrowing, and community learning. We empower minds with knowledge and innovation.</p>
+        <div class="card-grid" id="home-stats"></div>
+        <div style="background:#e6f0ff; border-radius:2rem; padding:1.5rem; margin-top:1rem;">
+            <h3>⭐ About Our Library</h3>
+            <p>Established in 1998, Central Library offers a serene environment, digital resources, and expert staff. Join us to explore worlds between pages.</p>
+        </div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="about-page" class="page">
+        <h2>📌 About Us</h2>
+        <p><strong>Introduction:</strong> Central Library has been serving readers for over 25 years, providing access to over 10,000 titles and e-resources.</p>
+        <div style="background:white; padding:1.5rem; border-radius:24px; margin:1rem 0;">
+            <h3>🎯 Mission Statement</h3>
+            <p>To empower community through inclusive access to information, fostering literacy and lifelong learning.</p>
+            <h3>🌟 Vision Statement</h3>
+            <p>To be a hub of knowledge innovation where every individual discovers their potential.</p>
+            <h3>📚 Services Offered</h3>
+            <ul><li>Book Lending</li><li>Member Registration</li><li>Book Tracking & Returns</li><li>Digital Catalog</li></ul>
+        </div>
+    </div>
+
+    <!-- BOOKS PAGE (View Books + Add Book toggle) -->
+    <div id="books-page" class="page">
+        <div style="display: flex; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap;">
+            <button id="show-add-book-btn" class="btn">➕ Add New Book</button>
+            <button id="show-view-books-btn" class="btn">📋 View All Books</button>
+        </div>
+        <div id="add-book-form-container" style="display:none;">
+            <div class="form-card"><h3>Add Book</h3>
+                <div class="form-group"><label>Book ID</label><input type="text" id="bookId" placeholder="B001"></div>
+                <div class="form-group"><label>Book Title</label><input type="text" id="bookTitle"></div>
+                <div class="form-group"><label>Author Name</label><input type="text" id="bookAuthor"></div>
+                <div class="form-group"><label>Category</label><select id="bookCategory"><option>Fiction</option><option>Non-Fiction</option><option>Science</option><option>Technology</option><option>History</option></select></div>
+                <div class="form-group"><label>Quantity</label><input type="number" id="bookQuantity" value="1"></div>
+                <button id="submitBookBtn">Submit Book</button>
+            </div>
+        </div>
+        <div id="view-books-table-container">
+            <h3>📚 Book Inventory</h3>
+            <table id="booksTable"><thead><tr><th>Book ID</th><th>Title</th><th>Author</th><th>Category</th><th>Quantity</th><th>Edit</th><th>Delete</th></tr></thead><tbody id="booksTableBody"></tbody></table>
+        </div>
+    </div>
+
+    <!-- MEMBERS PAGE (add member + view members) -->
+    <div id="members-page" class="page">
+        <div style="display: flex; gap:1rem; margin-bottom:1.5rem;">
+            <button id="show-add-member-btn" class="btn">➕ Register Member</button>
+            <button id="show-view-members-btn" class="btn">👥 View Members</button>
+        </div>
+        <div id="add-member-form-container" style="display:none;">
+            <div class="form-card"><h3>Member Registration</h3>
+                <div class="form-group"><label>Member ID</label><input id="memberId" placeholder="M1001"></div>
+                <div class="form-group"><label>Member Name</label><input id="memberName"></div>
+                <div class="form-group"><label>Phone Number</label><input id="memberPhone"></div>
+                <div class="form-group"><label>Email</label><input id="memberEmail" type="email"></div>
+                <div class="form-group"><label>Address</label><textarea id="memberAddress" rows="2"></textarea></div>
+                <button id="submitMemberBtn">Register Member</button>
+            </div>
+        </div>
+        <div id="view-members-container"><h3>📇 Registered Members</h3>
+            <table><thead><tr><th>Member ID</th><th>Name</th><th>Phone</th><th>Email</th><th>Address</th><th>Edit</th><th>Delete</th></tr></thead><tbody id="membersTableBody"></tbody></table>
+        </div>
+    </div>
+
+    <!-- ISSUE BOOK PAGE -->
+    <div id="issue-page" class="page">
+        <div class="form-card"><h2>📌 Issue Book</h2>
+            <div class="form-group"><label>Book ID</label><input id="issueBookId" placeholder="B001"></div>
+            <div class="form-group"><label>Member ID</label><input id="issueMemberId" placeholder="M1001"></div>
+            <div class="form-group"><label>Issue Date</label><input type="date" id="issueDate"></div>
+            <div class="form-group"><label>Return Date (Due)</label><input type="date" id="returnDate"></div>
+            <button id="issueBookBtn">Issue Book</button>
+        </div>
+    </div>
+
+    <!-- HISTORY PAGE (Issue/Return history) -->
+    <div id="history-page" class="page">
+        <h2>📜 Issue & Return History</h2>
+        <table><thead><tr><th>Book ID</th><th>Member ID</th><th>Issue Date</th><th>Return Date</th><th>Status</th><th>Action</th></tr></thead><tbody id="historyTableBody"></tbody></table>
+        <div style="margin-top:1rem;"><button id="refreshHistoryBtn" class="btn">⟳ Refresh</button></div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact-page" class="page">
+        <div class="card-grid" style="gap:2rem;">
+            <div class="stat-card"><h3>📍 Address</h3><p>123 Library Ave, Knowledge City, KC 56789</p></div>
+            <div class="stat-card"><h3>📞 Phone</h3><p>+1 (800) 123-4567</p></div>
+            <div class="stat-card"><h3>✉️ Email</h3><p>contact@libsys.com</p></div>
+        </div>
+        <div class="form-card"><h3>Send us a message</h3>
+            <div class="form-group"><label>Name</label><input id="contactName"></div>
+            <div class="form-group"><label>Email</label><input id="contactEmail"></div>
+            <div class="form-group"><label>Message</label><textarea id="contactMsg" rows="3"></textarea></div>
+            <button id="sendContactBtn">Send Message</button>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE (centered) -->
+    <div id="login-page" class="page">
+        <div style="display:flex; justify-content:center; align-items:center; min-height:60vh;">
+            <div class="form-card" style="width:400px; text-align:center;"><h2>🔐 Admin Login</h2>
+                <div class="form-group"><label>Username</label><input id="loginUsername" placeholder="admin"></div>
+                <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="password"></div>
+                <button id="loginBtn">Login</button><p id="loginMsg" style="margin-top:1rem;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEARCH BOOK + CATEGORIES inside Books? We'll create a search & categories snippet inside Books page but to satisfy all 13 prompts, also add "Search Book" and "Categories" options in books page -->
+    <div style="margin-top: 0.5rem;" id="extra-features"></div>
+</div>
+<footer>© 2025 Library Management System | All features integrated</footer>
+
+<script>
+    // ---------- Data Models ----------
+    let books = JSON.parse(localStorage.getItem('lms_books')) || [
+        { id:"B001", title:"The Great Gatsby", author:"F. Scott Fitzgerald", category:"Fiction", quantity:5 },
+        { id:"B002", title:"Sapiens", author:"Yuval Harari", category:"Non-Fiction", quantity:3 },
+        { id:"B003", title:"Brief History of Time", author:"Hawking", category:"Science", quantity:2 }
+    ];
+    let members = JSON.parse(localStorage.getItem('lms_members')) || [
+        { id:"M1001", name:"Alice Johnson", phone:"555-0101", email:"alice@example.com", address:"12 Main St" },
+        { id:"M1002", name:"Bob Smith", phone:"555-0102", email:"bob@example.com", address:"45 Oak Ave" }
+    ];
+    let transactions = JSON.parse(localStorage.getItem('lms_transactions')) || [
+        { bookId:"B001", memberId:"M1001", issueDate:"2025-04-01", returnDate:"2025-04-15", status:"Returned" },
+        { bookId:"B002", memberId:"M1002", issueDate:"2025-04-10", returnDate:"2025-04-25", status:"Issued" }
+    ];
+
+    function saveAllData() {
+        localStorage.setItem('lms_books', JSON.stringify(books));
+        localStorage.setItem('lms_members', JSON.stringify(members));
+        localStorage.setItem('lms_transactions', JSON.stringify(transactions));
+    }
+
+    // Helper: update dashboard home stats
+    function updateHomeStats() {
+        const totalBooks = books.reduce((sum,b)=>sum+b.quantity,0);
+        const totalMembers = members.length;
+        const issuedBooks = transactions.filter(t=>t.status==='Issued').length;
+        const container = document.getElementById('home-stats');
+        if(container) container.innerHTML = `
+            <div class="stat-card"><p>📚 Total Books</p><h3>${totalBooks}</h3></div>
+            <div class="stat-card"><p>👥 Total Members</p><h3>${totalMembers}</h3></div>
+            <div class="stat-card"><p>📖 Issued Books</p><h3>${issuedBooks}</h3></div>
+        `;
+    }
+
+    // Render Books Table
+    function renderBooksTable() {
+        const tbody = document.getElementById('booksTableBody');
+        if(!tbody) return;
+        tbody.innerHTML = '';
+        books.forEach((book, idx) => {
+            const row = tbody.insertRow();
+            row.insertCell(0).innerText = book.id;
+            row.insertCell(1).innerText = book.title;
+            row.insertCell(2).innerText = book.author;
+            row.insertCell(3).innerText = book.category;
+            row.insertCell(4).innerText = book.quantity;
+            const editCell = row.insertCell(5); const delCell = row.insertCell(6);
+            const editBtn = document.createElement('button'); editBtn.innerText = '✏️'; editBtn.className = 'action-btn edit-btn';
+            const delBtn = document.createElement('button'); delBtn.innerText = '🗑️'; delBtn.className = 'action-btn delete-btn';
+            editBtn.onclick = () => editBook(idx);
+            delBtn.onclick = () => deleteBook(idx);
+            editCell.appendChild(editBtn); delCell.appendChild(delBtn);
+        });
+    }
+    function editBook(idx) {
+        const b = books[idx];
+        const newTitle = prompt("Edit Title", b.title); if(newTitle) b.title = newTitle;
+        const newAuthor = prompt("Edit Author", b.author); if(newAuthor) b.author = newAuthor;
+        const newQty = prompt("Quantity", b.quantity); if(newQty && !isNaN(parseInt(newQty))) b.quantity = parseInt(newQty);
+        saveAllData(); renderBooksTable(); updateHomeStats(); renderCategoryBooks(); renderSearchResults();
+    }
+    function deleteBook(idx) {
+        if(confirm("Delete book?")) { books.splice(idx,1); saveAllData(); renderBooksTable(); updateHomeStats(); renderCategoryBooks(); renderSearchResults(); }
+    }
+    function addBook(book) { books.push(book); saveAllData(); renderBooksTable(); updateHomeStats(); renderCategoryBooks(); renderSearchResults(); }
+    // Members render
+    function renderMembersTable() {
+        const tbody = document.getElementById('membersTableBody');
+        if(!tbody) return;
+        tbody.innerHTML='';
+        members.forEach((m,idx)=>{
+            const row=tbody.insertRow();
+            row.insertCell(0).innerText=m.id; row.insertCell(1).innerText=m.name; row.insertCell(2).innerText=m.phone; row.insertCell(3).innerText=m.email; row.insertCell(4).innerText=m.address;
+            const editCell=row.insertCell(5); const delCell=row.insertCell(6);
+            const eBtn=document.createElement('button'); eBtn.innerText='✏️'; eBtn.className='action-btn edit-btn';
+            const dBtn=document.createElement('button'); dBtn.innerText='🗑️'; dBtn.className='action-btn delete-btn';
+            eBtn.onclick=()=>editMember(idx);
+            dBtn.onclick=()=>deleteMember(idx);
+            editCell.appendChild(eBtn); delCell.appendChild(dBtn);
+        });
+    }
+    function editMember(idx){ let m=members[idx]; let newName=prompt("Name",m.name); if(newName) m.name=newName; let newPhone=prompt("Phone",m.phone); if(newPhone) m.phone=newPhone; saveAllData(); renderMembersTable(); updateHomeStats();}
+    function deleteMember(idx){ if(confirm("Remove member?")){ members.splice(idx,1); saveAllData(); renderMembersTable(); updateHomeStats(); } }
+    function addMember(member){ members.push(member); saveAllData(); renderMembersTable(); updateHomeStats(); }
+
+    // History render
+    function renderHistory() {
+        const tbody = document.getElementById('historyTableBody');
+        if(!tbody) return;
+        tbody.innerHTML='';
+        transactions.forEach((t,idx)=>{
+            const row=tbody.insertRow();
+            row.insertCell(0).innerText=t.bookId;
+            row.insertCell(1).innerText=t.memberId;
+            row.insertCell(2).innerText=t.issueDate;
+            row.insertCell(3).innerText=t.returnDate;
+            row.insertCell(4).innerText=t.status;
+            const actionCell=row.insertCell(5);
+            if(t.status==='Issued'){
+                const returnBtn=document.createElement('button');
+                returnBtn.innerText='Return Book';
+                returnBtn.className='btn';
+                returnBtn.style.padding='0.2rem 1rem';
+                returnBtn.onclick=()=>{ t.status='Returned'; t.returnDate=new Date().toISOString().slice(0,10); saveAllData(); renderHistory(); updateHomeStats(); };
+                actionCell.appendChild(returnBtn);
+            } else { actionCell.innerText='-'; }
+        });
+    }
+    function issueTransaction(bookId, memberId, issueDate, returnDate){
+        const existsIssued = transactions.some(t=>t.bookId===bookId && t.status==='Issued');
+        const bookExists = books.some(b=>b.id===bookId);
+        const memberExists = members.some(m=>m.id===memberId);
+        if(!bookExists){ alert("Book ID not found"); return false; }
+        if(!memberExists){ alert("Member ID not found"); return false; }
+        if(existsIssued){ alert("Book already issued & not returned"); return false; }
+        transactions.push({ bookId, memberId, issueDate, returnDate, status:"Issued" });
+        saveAllData(); renderHistory(); updateHomeStats(); return true;
+    }
+
+    // Additional Prompts: Search Book and Categories
+    // We'll add Search UI inside Books page dynamically or additional section. Let's embed in books page after tables.
+    function embedSearchAndCategories() {
+        const booksPageDiv = document.getElementById('books-page');
+        if(document.getElementById('searchCatSection')) return;
+        const section = document.createElement('div');
+        section.id='searchCatSection';
+        section.innerHTML = `
+            <hr style="margin:2rem 0;">
+            <h2>🔍 Search Books (by Title/Author)</h2>
+            <div class="search-section"><input type="text" id="searchInput" placeholder="Enter title or author..." style="flex:2;"><button id="performSearchBtn">Search</button></div>
+            <div id="searchResultsTable"><table><thead><tr><th>Book ID</th><th>Title</th><th>Author</th><th>Category</th><th>Quantity</th></tr></thead><tbody id="searchResultBody"></tbody></table></div>
+            <h2>📚 Categories & Books</h2>
+            <div id="categoriesContainer"></div>
+        `;
+        booksPageDiv.appendChild(section);
+        document.getElementById('performSearchBtn')?.addEventListener('click', () => performSearch());
+        document.getElementById('searchInput')?.addEventListener('keyup', (e) => { if(e.key==='Enter') performSearch(); });
+        renderCategoriesView();
+    }
+
+    function performSearch() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = books.filter(b => b.title.toLowerCase().includes(query) || b.author.toLowerCase().includes(query));
+        const tbody = document.getElementById('searchResultBody');
+        if(tbody){
+            tbody.innerHTML='';
+            filtered.forEach(b=>{
+                const row = tbody.insertRow();
+                row.insertCell(0).innerText=b.id; row.insertCell(1).innerText=b.title; row.insertCell(2).innerText=b.author; row.insertCell(3).innerText=b.category; row.insertCell(4).innerText=b.quantity;
+            });
+        }
+    }
+    function renderCategoriesView() {
+        const cats = ["Fiction","Non-Fiction","Science","Technology","History"];
+        const container = document.getElementById('categoriesContainer');
+        if(!container) return;
+        container.innerHTML='';
+        cats.forEach(cat=>{
+            const catBooks = books.filter(b=>b.category===cat);
+            const card = document.createElement('div');
+            card.style.background='white'; card.style.borderRadius='1.5rem'; card.style.margin='1rem 0'; card.style.padding='1rem';
+            card.innerHTML = `<h3 style="background:#eef2ff; display:inline-block; padding:0.3rem 1rem; border-radius:30px;">${cat}</h3><ul>${catBooks.map(b=>`<li>${b.title} by ${b.author} (Qty:${b.quantity})</li>`).join('') || '<li>No books</li>'}</ul>`;
+            container.appendChild(card);
+        });
+    }
+    function renderSearchResults() { if(document.getElementById('searchResultBody')) performSearch(); if(document.getElementById('categoriesContainer')) renderCategoriesView(); }
+
+    // Add event listeners and UI toggles
+    document.addEventListener('DOMContentLoaded',()=>{
+        // navigation
+        const pages = ['home','about','books','members','history','contact','login'];
+        document.querySelectorAll('.nav-links a').forEach(link=>{
+            link.addEventListener('click',(e)=>{
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                pages.forEach(p=>{ document.getElementById(`${p}-page`).classList.remove('active-page'); });
+                document.getElementById(`${pageId}-page`).classList.add('active-page');
+                if(pageId==='home') updateHomeStats();
+                if(pageId==='books') { renderBooksTable(); embedSearchAndCategories(); renderCategoriesView(); performSearch(); }
+                if(pageId==='members') renderMembersTable();
+                if(pageId==='history') renderHistory();
+                if(pageId==='books') { renderBooksTable(); embedSearchAndCategories(); }
+            });
+        });
+        // Add Book button logic
+        document.getElementById('submitBookBtn')?.addEventListener('click',()=>{
+            let id=document.getElementById('bookId').value.trim(); let title=document.getElementById('bookTitle').value.trim(); let author=document.getElementById('bookAuthor').value.trim(); let cat=document.getElementById('bookCategory').value; let qty=parseInt(document.getElementById('bookQuantity').value);
+            if(!id||!title||!author) { alert("Fill all fields"); return; }
+            if(books.some(b=>b.id===id)){ alert("Book ID exists"); return; }
+            addBook({ id, title, author, category:cat, quantity:qty });
+            document.getElementById('bookId').value=''; document.getElementById('bookTitle').value=''; document.getElementById('bookAuthor').value='';
+            alert("Book added");
+        });
+        document.getElementById('show-add-book-btn')?.addEventListener('click',()=>{ document.getElementById('add-book-form-container').style.display='block'; document.getElementById('view-books-table-container').style.display='block'; });
+        document.getElementById('show-view-books-btn')?.addEventListener('click',()=>{ document.getElementById('add-book-form-container').style.display='none'; });
+        // Member
+        document.getElementById('submitMemberBtn')?.addEventListener('click',()=>{
+            let id=document.getElementById('memberId').value.trim(); let name=document.getElementById('memberName').value.trim(); let phone=document.getElementById('memberPhone').value.trim(); let email=document.getElementById('memberEmail').value.trim(); let addr=document.getElementById('memberAddress').value.trim();
+            if(!id||!name) { alert("Member ID & Name required"); return; }
+            if(members.some(m=>m.id===id)){ alert("Duplicate Member ID"); return; }
+            addMember({ id, name, phone, email, address:addr });
+            document.getElementById('memberId').value=''; document.getElementById('memberName').value=''; document.getElementById('memberPhone').value=''; document.getElementById('memberEmail').value=''; document.getElementById('memberAddress').value='';
+            alert("Member registered");
+        });
+        document.getElementById('show-add-member-btn')?.addEventListener('click',()=>{ document.getElementById('add-member-form-container').style.display='block'; });
+        document.getElementById('show-view-members-btn')?.addEventListener('click',()=>{ document.getElementById('add-member-form-container').style.display='none'; });
+        // Issue book
+        document.getElementById('issueBookBtn')?.addEventListener('click',()=>{
+            const bookId=document.getElementById('issueBookId').value.trim(); const memberId=document.getElementById('issueMemberId').value.trim(); const issueDate=document.getElementById('issueDate').value; const returnDate=document.getElementById('returnDate').value;
+            if(!bookId||!memberId||!issueDate||!returnDate){ alert("Please fill all fields"); return; }
+            if(issueTransaction(bookId, memberId, issueDate, returnDate)){ alert("Book Issued"); document.getElementById('issueBookId').value=''; document.getElementById('issueMemberId').value=''; renderHistory(); updateHomeStats(); }
+        });
+        document.getElementById('refreshHistoryBtn')?.addEventListener('click',()=>renderHistory());
+        document.getElementById('sendContactBtn')?.addEventListener('click',()=>{ alert("Thank you! Library will reach soon."); });
+        document.getElementById('loginBtn')?.addEventListener('click',()=>{ let u=document.getElementById('loginUsername').value; let p=document.getElementById('loginPassword').value; if(u==='admin' && p==='password') alert("Login successful (demo)"); else document.getElementById('loginMsg').innerText="Invalid credentials"; });
+        updateHomeStats(); renderBooksTable(); renderMembersTable(); renderHistory(); embedSearchAndCategories();
+        // default open home
+        document.getElementById('home-page').classList.add('active-page');
+        for(let p of pages) if(p!=='home') document.getElementById(`${p}-page`).classList.remove('active-page');
+    });
+</script>
+</body>
+</html>
