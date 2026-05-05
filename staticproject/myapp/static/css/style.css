@@ -1,0 +1,58 @@
+/* Page background */
+body {
+    background: linear-gradient(to right, #2065cd, #0ccdd7);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Title */
+h1 {
+    color: #2c3e50;
+    padding: 20px;
+    background-color: #dd1717;
+    border-radius: 10px;
+    width: 60%;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Section cards */
+div {
+    background-color: rgb(83, 221, 37);
+    width: 70%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(14, 8, 8, 0.1);
+    text-align: center;
+}
+
+/* Headings */
+h2 {
+    color: #34495e;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: #2980b9;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #e74c3c;
+}
+
+/* Images */
+img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.1);
+}
