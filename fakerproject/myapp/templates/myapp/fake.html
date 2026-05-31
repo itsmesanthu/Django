@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>fake employee</h1>
+        <table border="2">
+            <tr>
+                <th>name</th>
+                <th>dob</th>
+                <th>job</th>
+                <th>place</th>
+                <th>email</th>
+            </tr>
+               {% for i in fake%}
+             <tr>
+                <td>{{i.name}}</td>
+                <td>{{i.dob}}</td>
+                <td>{{i.job}}</td>
+                <td>{{i.place}}</td>
+                <td>{{i.email}}</td>
+            </tr>
+                {%endfor%}
+
+        </table>
+    </center>
+</body>
+</html>
