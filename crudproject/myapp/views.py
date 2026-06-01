@@ -7,7 +7,7 @@ def display(request):
     d={'emp':e}
     return render(request,'myapp/display.html',d)
 def insert(request):
-    f=employeeform()
+    f=employeeform() 
     if request.method=="POST":
         f=employeeform(request.POST)
         if f.is_valid():
