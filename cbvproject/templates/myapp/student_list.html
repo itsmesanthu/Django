@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=initial-scale, initial-scale=1.0">
+    <title>Student list</title>
+</head>
+<body>
+    <center>
+        <h1>list of the student </h1>
+        {% for i in student_list %}
+        <h2><a href="{% url 'details' i.id %}">{{i.name}} 's details</a></h2>
+            {% endfor %}
+    </center>
+</body>
+</html>

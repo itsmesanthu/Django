@@ -1,5 +1,5 @@
 """
-URL configuration for cbvproject project.
+URL configuration for ormproject project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/6.0/topics/http/urls/
@@ -16,11 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myapp.views import student_list,student_details,student_update,student_delet
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('student/',student_list.as_view(),name='student'),
-    path('detail/<int:pk>/',student_details.as_view(),name='details'),
-    path('update/<int:pk>/',student_update.as_view(),name='update'),
-    path('delete/<int:pk>/',student_delet.as_view(),name='delete')
 ]
