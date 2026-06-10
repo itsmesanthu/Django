@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login page</title>
+</head>
+<body>
+    <h2>slms peoject login page</h2>
+    <form method="POST">
+        <legend>login</legend>
+        {% csrf_token %}
+        <label >username:</label><input type="text" name="username" placeholder="enter the user name" required><br><br>
+         <label >password:</label><input type="password" name="password" placeholder="enter the password" required><br><br>
+         <button type="submit">login</button>
+    </form>
+    <p>Dont have an accounts?
+        <a href="{% url 'register' %}">Register</a>
+    </p>
+</body>
+</html>

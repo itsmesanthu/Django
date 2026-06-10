@@ -9,26 +9,26 @@
     <center>
        <h1>SLMS PROJECT</h1>
             <p>staff leave management system</p>
-            <form method="PSOT">
+            <form method="POST">
                 {% csrf_token %}
                 <legend>Register form</legend>
-                <label>Username:</label><input type="text" name="username" placeholder="enter uername" required><br><br>
+                <label>Username:</label><input type="text" name="username" placeholder="enter username" required><br><br>
                 <label>Password:</label><input type="password" name="password" placeholder="enter password" required><br><br>
                 <label>Role</label>
-                <select name="Role" required>
+                <select name="role" required>
                     <option value="">select Role</option>
                     <option value="admin">admin</option>
                     <option value="staff">staff</option>
                 </select>
                 <p>Admin can manage staff and approve leave required</p>
                 <button type="submit">Register</button>
+                       </form>
                 <p>Already have an accounts?
-                    <a href="#">Login</a>
+                    <a href="{% url 'login' %}">Login</a>
                 </p>
                 <p>
                     <a href="#">Back to header</a> 
                 </p>
-            </form>
     </center>
 </body>
 </html>
