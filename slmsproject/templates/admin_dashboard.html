@@ -2,22 +2,32 @@
 <html lang="en">
 
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'account/style.css' %}">
 </head>
 
 <body>
-    <h2>Admin Dashboard</h2>
-    {% csrf_token %}
-    <a href="#">View Leave Requests</a>
-    <a href="{% url 'logout' %}">Logout</a>
-    <h3>Total Leave Requests</h3>
-    <p>Manage all staff leave applications</p>
-    <a href="#">OPen</a>
-    <h3>Staff Management</h3>
-    <p>View registered staff users</p>
-    <a href="#">Manage staff</a>
+    <div class="container card">
+        <h2>Admin Dashboard</h2>
+        {% csrf_token %}
+        <div class="button-group" style="margin-bottom: 1.5rem;">
+            <a class="button button-secondary" href="#">View Leave Requests</a>
+            <a class="button" href="{% url 'logout' %}">Logout</a>
+        </div>
+        <section>
+            <h3>Total Leave Requests</h3>
+            <p>Manage all staff leave applications</p>
+            <a class="button button-secondary" href="#">Open</a>
+        </section>
+        <section style="margin-top: 1.5rem;">
+            <h3>Staff Management</h3>
+            <p>View registered staff users</p>
+            <a class="button button-secondary" href="{% url 'manage' %}">Manage staff</a>
+        </section>
+    </div>
 </body>
 
 </html>

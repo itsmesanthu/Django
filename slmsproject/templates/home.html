@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home page</title>
+    <link rel="stylesheet" href="{% static 'account/style.css' %}">
 </head>
-<body style="background-image: url('https://in.pinterest.com/pin/500110733642315849/');background-repeat: no-repeat;background-position: center;">
-    <center>
-        <hr>
-            <h1>SLMS PROJECT</h1>
-            <p>staff leave management system</p>
-    <div style="display: flex;justify-content: center;align-items: center;">
-        <button><a href="{% url 'login' %}" style="text-decoration: none;">Login</a></button>
-         <button><a href="{% url 'register'%}" style="text-decoration: none;">Register</a></button>
+<body>
+    <div class="container card centered">
+        <h1>SLMS Project</h1>
+        <p>Staff Leave Management System</p>
+        <div class="button-group">
+            <a class="button" href="{% url 'login' %}">Login</a>
+            <a class="button button-secondary" href="{% url 'register' %}">Register</a>
+        </div>
+        <footer>
+            <p>@ copyright 2026 Santhosh | All rights reserved</p>
+        </footer>
     </div>
-    <hr>
-    <footer>
-        <p>@ copyrigth 2026 Santhosh | all rigths reserved</p>
-    </footer>
-    <hr>
- </center>
-</body>
 </body>
 </html>

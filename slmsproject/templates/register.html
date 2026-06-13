@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>register page</title>
+    <title>Register page</title>
+    <link rel="stylesheet" href="{% static 'account/style.css' %}">
 </head>
 <body>
-    <center>
-       <h1>SLMS PROJECT</h1>
-            <p>staff leave management system</p>
-            <form method="POST">
-                {% csrf_token %}
-                <legend>Register form</legend>
-                <label>Username:</label><input type="text" name="username" placeholder="enter username" required><br><br>
-                <label>Password:</label><input type="password" name="password" placeholder="enter password" required><br><br>
-                <label>Role</label>
-                <select name="role" required>
-                    <option value="">select Role</option>
-                    <option value="admin">admin</option>
-                    <option value="staff">staff</option>
-                </select>
-                <p>Admin can manage staff and approve leave required</p>
-                <button type="submit">Register</button>
-                       </form>
-                <p>Already have an accounts?
-                    <a href="{% url 'login' %}">Login</a>
-                </p>
-                <p>
-                    <a href="#">Back to header</a> 
-                </p>
-    </center>
+    <div class="container card">
+        <div class="centered">
+            <h1>SLMS Project</h1>
+            <p>Staff Leave Management System</p>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <legend class="legend-title">Register</legend>
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Enter username" required>
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter password" required>
+            <label>Role</label>
+            <select name="role" required>
+                <option value="">Select role</option>
+                <option value="admin">Admin</option>
+                <option value="staff">Staff</option>
+            </select>
+            <p>Admin can manage staff and approve leave requests.</p>
+            <button type="submit">Register</button>
+        </form>
+        <p class="centered">
+            Already have an account? <a href="{% url 'login' %}">Login</a>
+        </p>
+    </div>
 </body>
 </html>
