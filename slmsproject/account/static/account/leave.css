@@ -1,0 +1,30 @@
+.leave{
+ margin-top: 50px;
+ padding: 20px;
+ border: 10px inset green;
+ border-radius: 10px;
+    display: flex;
+    justify-self:center;
+}
+button{
+    margin-left: 90px  ;
+    background-color:gray;
+}
+button:hover{
+    height: 20px;
+    background-color: green;
+    color: red;
+    border-radius: 5px;
+}
+label{
+    font-size: large;
+    color: blue;
+    margin-right: 15px ;
+}
+input:hover{
+    border-color:red;
+}
+h1{
+    text-align: center;
+    
+}

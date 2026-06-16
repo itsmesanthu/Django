@@ -14,7 +14,7 @@
         <h2>Admin Dashboard</h2>
         {% csrf_token %}
         <div class="button-group" style="margin-bottom: 1.5rem;">
-            <a class="button button-secondary" href="#">View Leave Requests</a>
+            <a class="button button-secondary" href="{% url 'view_leave'%}">View Leave Requests</a>
             <a class="button" href="{% url 'logout' %}">Logout</a>
         </div>
         <section>
