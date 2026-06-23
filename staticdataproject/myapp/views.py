@@ -4,7 +4,7 @@ from django.views.generic import View
 from .models import Product
 import json
 class ProductDetail(View):
-    def get(self,request,*args, **kwargs):
+    def get(self,request,id,*args, **kwargs):
         prod=Product.objects.get(id=2)
         prod_data={
             'name':prod.name,
